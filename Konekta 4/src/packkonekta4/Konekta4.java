@@ -76,7 +76,6 @@ public class Konekta4 {
 	private void irabazlea() {
 		String irabazlea=null;
 		//TODO
-		//TODO
 		System.out.println("Partidaren irabazlea: "+irabazlea);
 	}
 }
