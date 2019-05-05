@@ -12,7 +12,7 @@ public class Konekta4 {
 	private Konekta4() {
 		this.jokalariak=new Jokalaria[2];
 		this.txanda=1;
-	}//hola que tal estais compañeros
+	}
 
 	//gainontzeko metodoak
 	public static Konekta4 getNireKonekta4() {
