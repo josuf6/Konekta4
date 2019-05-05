@@ -23,4 +23,18 @@ public class Taula {
 		//TODO
 		return beteta;
 	}
+	
+	public boolean zutabBeteta(int pZutab) {
+		boolean beteta=false;
+		//TODO
+		return beteta;
+	}
+	
+	public void fitxaKolorezAldatu(int pZutab) {
+		//TODO
+	}
+	
+	public void inprimatuTaula() {
+		//TODO
+	}
 }
