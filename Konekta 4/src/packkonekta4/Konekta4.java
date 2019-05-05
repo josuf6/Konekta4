@@ -27,7 +27,7 @@ public class Konekta4 {
 	}
 	
 	public void partidaBatJolastu() {
-		//TODO
+		System.out.println("Partidaren irabazlea: "+irabazlea);
 	}
 	
 	private void jokalariakInskribatu() {
