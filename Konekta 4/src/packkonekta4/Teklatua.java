@@ -4,11 +4,13 @@ import java.util.Scanner;
 
 public class Teklatua {
 	//atributuak
-	private static Teklatua nireTeklatua=null;
 	private Scanner sc;
+	private static Teklatua nireTeklatua=null;
+	
 
 	//eraikitzailea(k)
 	private Teklatua() {
+		this.sc=new Scanner(System.in);
 	}
 
 	//gainontzeko metodoak
@@ -19,10 +21,10 @@ public class Teklatua {
 		return nireTeklatua;
 	}
 	
-	public int irakurriOsoa(String pAurrekoMezua, int pNondik, int pNora) {
-		int zenbakia=0;
-		//TODO
-		return zenbakia;
+	public int irakurriOsoa() {
+		Int zenb = this.sc.nextInt();
+		
+		return zenb;
 	}
 	
 	public String irakurriString(String pAurrekoMezua) {
