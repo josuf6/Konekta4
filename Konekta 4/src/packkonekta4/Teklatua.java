@@ -23,19 +23,16 @@ public class Teklatua {
 	
 	public int irakurriOsoa() {
 		Int zenb = this.sc.nextInt();
-		
 		return zenb;
 	}
 	
-	public String irakurriString(String pAurrekoMezua) {
-		String mezua=null;
-		//TODO
+	public String irakurriString() {
+		String mezua = this.sc.nextLine();
 		return mezua;
 	}
 	
-	public char irakurriChar(String pAurrekoMezua) {
-		char mezua=' ';
-		//TODO
-		return mezua;
+	public char irakurriChar() {
+		char karakterea=sc.next().charAt(0);
+		return karakterea;
 	}
 }
