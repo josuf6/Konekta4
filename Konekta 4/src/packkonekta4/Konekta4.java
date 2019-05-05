@@ -23,7 +23,7 @@ public class Konekta4 {
 	}
 	
 	public void jokoaHasieratu() {
-		//TODO
+		System.out.println("Partidaren irabazlea: "+irabazlea);
 	}
 	
 	public void partidaBatJolastu() {
