@@ -2,7 +2,7 @@ package packkonekta4;
 
 public class Bonba extends Gelaxka {
 	//atributuak
-	//pollas
+	//pollask
 	//eraikitzailea(k)
 	public Bonba() {
 		this.kolorea='K';
