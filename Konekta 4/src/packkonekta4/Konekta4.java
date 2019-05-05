@@ -23,7 +23,6 @@ public class Konekta4 {
 	}
 	
 	public void jokoaHasieratu() {
-		//TODO
 	}
 	
 	public void partidaBatJolastu() {
