@@ -10,6 +10,6 @@ public class KomodinaErabiltzeaZentzurikEz extends Exception {
 
 	//gainontzeko metodoak
 	public void inprimatu() {
-		System.out.println("Ez da komenigarria zure komodina egoera honetan erabiltzea. Ziur al zaude?");
+		System.out.println("Ez da komenigarria zure komodina egoera honetan erabiltzea. Ziur al zaude? (Bai 'B' edo ez 'E' aukeratu)");
 	}
 }

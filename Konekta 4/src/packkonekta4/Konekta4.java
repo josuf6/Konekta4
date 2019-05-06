@@ -68,19 +68,30 @@ public class Konekta4 {
 		} while (Taula.getNireTaula().zutabBeteta(zutabePos) && (zutabePos<1 || zutabePos>7));
 		Taula.getNireTaula().fitxaKolorezAldatu(zutabePos, this.jokalariak[txanda].getKolorea());
 		if (this.jokalariak[txanda].getKomodinErabilgarria()!=0) {
+			int errenk=Taula.getNireTaula().getErrenkada(zutabePos);
+			System.out.println("Zure komodina erabili nahi duzu? (Bai 'B' edo ez 'E' aukeratu)");
 			boolean komodinaErabili=this.komodinaErabiliNahi();
 			if (komodinaErabili) {
-				int errenk=Taula.getNireTaula().getErrenkada(zutabePos);
 				try {
-					if (this.jokalariak[txanda].getKomodinErabilgarria()==1) {
-						//TODO
+					if (this.jokalariak[txanda].getKomodinErabilgarria()==1 && this.bonbaErabiltzeaZentzurikEz(zutabePos, errenk, this.jokalariak[txanda].getKolorea())) {
+						throw new KomodinaErabiltzeaZentzurikEz();
 					}
-					else if (komodinaErabili && this.jokalariak[txanda].getKomodinErabilgarria()==2) {
-						//TODO
+					else if (this.jokalariak[txanda].getKomodinErabilgarria()==2 && this.eraldatuErabiltzeaZentzurikEz(zutabePos, errenk)) {
+						throw new KomodinaErabiltzeaZentzurikEz();
 					}
 				}
 				catch (KomodinaErabiltzeaZentzurikEz e) {
-					//TODO
+					e.inprimatu();
+					komodinaErabili=this.komodinaErabiliNahi();
+				}
+			}
+			if (komodinaErabili) {
+				Gelaxka gelaxka=Taula.getNireTaula().getGelaxka(zutabePos, errenk);
+				if (gelaxka instanceof Bonba) {
+					((Bonba)gelaxka).ingurukoakDesagertu(zutabePos, errenk);
+				}
+				else if (gelaxka instanceof Eraldatu) {
+					((Eraldatu)gelaxka).azpikoFitxaKolorezAldatu(zutabePos, errenk, this.jokalariak[txanda].getKolorea());
 				}
 			}
 		}
@@ -113,7 +124,6 @@ public class Konekta4 {
 	private boolean komodinaErabiliNahi() {
 		boolean komodinaErabili=false;
 		boolean erantzunZuzena=false;
-		System.out.println("Zure komodina erabili nahi duzu? (Bai 'B' edo ez 'E' aukeratu)");
 		char erantzuna=Teklatua.getNireTeklatua().irakurriChar();
 		while (!erantzunZuzena) {
 			if (erantzuna=='b' || erantzuna=='B') {
@@ -128,5 +138,21 @@ public class Konekta4 {
 			}
 		}
 		return komodinaErabili;
+	}
+	
+	private boolean bonbaErabiltzeaZentzurikEz(int pZutab, int pErrenk, char pKolorea) {
+		boolean zentzurikEz=false;
+		if (Taula.getNireTaula().albokoakHutsik(pZutab, pErrenk) || Taula.getNireTaula().albokoakKoloreBerdina(pZutab, pErrenk, pKolorea)) {
+			zentzurikEz=true;
+		}
+		return zentzurikEz;
+	}
+	
+	private boolean eraldatuErabiltzeaZentzurikEz(int pZutab, int pErrenk) {
+		boolean zentzurikEz=false;
+		if (Taula.getNireTaula().azkenekoGelaxka(pZutab, pErrenk)) {
+			zentzurikEz=true;
+		}
+		return zentzurikEz;
 	}
 }

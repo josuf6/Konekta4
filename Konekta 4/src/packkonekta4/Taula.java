@@ -58,6 +58,12 @@ public class Taula {
 		return azkena;
 	}
 	
+	public Gelaxka getGelaxka(int pZutab, int pErrenk) {
+		Gelaxka gelaxka=null;
+		//TODO
+		return gelaxka;
+	}
+	
 	public void inprimatuTaula(Gelaxka[][] taula) {
 		//i errenkada eta j zutabeak
 		for(int i=0;i<this.taula.length;i++){
