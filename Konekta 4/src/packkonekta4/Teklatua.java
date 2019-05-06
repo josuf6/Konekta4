@@ -22,7 +22,7 @@ public class Teklatua {
 	}
 	
 	public int irakurriOsoa() {
-		Int zenb = this.sc.nextInt();
+		int zenb = this.sc.nextInt();
 		return zenb;
 	}
 	

@@ -22,6 +22,10 @@ public class Jokalaria {
 		return this.kolorea;
 	}
 	
+	public int getKomodinErabilgarria() {
+		return this.komodinErabilgarria;
+	}
+	
 	public void setKomodinErabilgarria(int pKomEra) {
 		this.komodinErabilgarria=pKomEra;
 	}

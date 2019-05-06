@@ -48,11 +48,42 @@ public class Konekta4 {
 		int txanda=this.norenTxanda();
 		System.out.println(this.jokalariak[txanda].getIzena()+"-(r)en txanda");
 		int zutabePos=Teklatua.getNireTeklatua().irakurriOsoa();
-		while (Taula.getNireTaula().zutabBeteta(zutabePos)) {
-			System.out.println("Beteta ez dagoen zutabe bat aukeratu");
-			zutabePos=Teklatua.getNireTeklatua().irakurriOsoa();
+		do {
+			try {
+				if (zutabePos<1 || zutabePos>7) {
+					throw new ZutabeEzEgokia();
+				}
+				else if (Taula.getNireTaula().zutabBeteta(zutabePos)) {
+					throw new ZutabeBeteta();
+				}
+			}
+			catch (ZutabeEzEgokia e) {
+				e.inprimatu();
+				zutabePos=Teklatua.getNireTeklatua().irakurriOsoa();
+			}
+			catch (ZutabeBeteta e) {
+				e.inprimatu();
+				zutabePos=Teklatua.getNireTeklatua().irakurriOsoa();
+			}
+		} while (Taula.getNireTaula().zutabBeteta(zutabePos) && (zutabePos<1 || zutabePos>7));
+		Taula.getNireTaula().fitxaKolorezAldatu(zutabePos, this.jokalariak[txanda].getKolorea());
+		if (this.jokalariak[txanda].getKomodinErabilgarria()!=0) {
+			boolean komodinaErabili=this.komodinaErabiliNahi();
+			if (komodinaErabili) {
+				int errenk=Taula.getNireTaula().getErrenkada(zutabePos);
+				try {
+					if (this.jokalariak[txanda].getKomodinErabilgarria()==1) {
+						//TODO
+					}
+					else if (komodinaErabili && this.jokalariak[txanda].getKomodinErabilgarria()==2) {
+						//TODO
+					}
+				}
+				catch (KomodinaErabiltzeaZentzurikEz e) {
+					//TODO
+				}
+			}
 		}
-		
 		this.txanda=this.txanda+1;
 	}
 	
@@ -77,5 +108,25 @@ public class Konekta4 {
 		String irabazlea=null;
 		//TODO
 		System.out.println("Partidaren irabazlea: "+irabazlea);
+	}
+	
+	private boolean komodinaErabiliNahi() {
+		boolean komodinaErabili=false;
+		boolean erantzunZuzena=false;
+		System.out.println("Zure komodina erabili nahi duzu? (Bai 'B' edo ez 'E' aukeratu)");
+		char erantzuna=Teklatua.getNireTeklatua().irakurriChar();
+		while (!erantzunZuzena) {
+			if (erantzuna=='b' || erantzuna=='B') {
+				komodinaErabili=true;
+				erantzunZuzena=true;
+			}
+			else if (erantzuna=='e' || erantzuna=='E') {
+				erantzunZuzena=true;
+			}
+			else {
+				System.out.println("Erantzun egoki bat eman, mesedez");
+			}
+		}
+		return komodinaErabili;
 	}
 }

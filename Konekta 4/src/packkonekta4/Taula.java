@@ -30,8 +30,32 @@ public class Taula {
 		return beteta;
 	}
 	
-	public void fitxaKolorezAldatu(int pZutab) {
+	public void fitxaKolorezAldatu(int pZutab, char pKolorea) {
 		//TODO
+	}
+	
+	public int getErrenkada(int pZutab) {
+		int errenkada=0;
+		//TODO
+		return errenkada;
+	}
+	
+	public boolean albokoakHutsik(int x, int y) {
+		boolean hutsik=false;
+		//TODO
+		return hutsik;
+	}
+	
+	public boolean albokoakKoloreBerdina(int x, int y, char pKolorea) {
+		boolean berdina=false;
+		//TODO
+		return berdina;
+	}
+	
+	public boolean azkenekoGelaxka(int x, int y) {
+		boolean azkena=false;
+		//TODO
+		return azkena;
 	}
 	
 	public void inprimatuTaula() {
