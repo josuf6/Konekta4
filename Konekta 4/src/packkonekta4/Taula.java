@@ -54,8 +54,8 @@ public class Taula {
 	
 	public boolean azkenekoGelaxka(int x, int y) {
 		boolean azkena=false;
-		if(y==5){
-			
+		if(y==this.taula[0].length-1){
+			azkena=true;
 		}
 		return azkena;
 	}
@@ -66,15 +66,14 @@ public class Taula {
 		return gelaxka;
 	}
 	
-	public void inprimatuTaul) {
-		//i errenkada eta j zutabeak
-		System.out.println(" _____________________");
-		for(int i=0;i<this.taula.length;i++){
-			for(int j=0;j<this.taula[0].length;j++){
-				System.out.print(" | "+taula[i][j]);
+	public void inprimatuTaula() {
+		System.out.println(" _____________________________");
+		for(int i=0;i<this.taula[0].length;i++){
+			for(int j=0;j<this.taula.length;j++){
+				System.out.print(" | "+taula[j][i]);
 			}
-			System.out.println(" | ");
-			System.out.println(" _____________________");
+			System.out.println(" |");
+			System.out.println(" _____________________________");
 		}
 	}
 }
