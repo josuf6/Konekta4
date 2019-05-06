@@ -23,12 +23,14 @@ public class Konekta4 {
 	}
 	
 	public void jokoaHasieratu() {
+		//TODO
 	}
 	
 	public void partidaBatJolastu() {
 		System.out.println("ONGI ETORRI KONEKTA 4 JOKORA!");
 		this.jokalariakInskribatu();
 		System.out.println("PARTIDA HAS DADILA!");
+		this.jokoaHasieratu();
 		while (!this.amaituta()) {
 			this.hurrengoTxanda();
 		}
@@ -53,7 +55,7 @@ public class Konekta4 {
 				if (zutabePos<1 || zutabePos>7) {
 					throw new ZutabeEzEgokia();
 				}
-				else if (Taula.getNireTaula().zutabBeteta(zutabePos)) {
+				else if (Taula.getNireTaula().zutabBeteta(zutabePos-1)) {
 					throw new ZutabeBeteta();
 				}
 			}
@@ -65,18 +67,18 @@ public class Konekta4 {
 				e.inprimatu();
 				zutabePos=Teklatua.getNireTeklatua().irakurriOsoa();
 			}
-		} while (Taula.getNireTaula().zutabBeteta(zutabePos) && (zutabePos<1 || zutabePos>7));
-		Taula.getNireTaula().fitxaKolorezAldatu(zutabePos, this.jokalariak[txanda].getKolorea());
+		} while (Taula.getNireTaula().zutabBeteta(zutabePos-1) && (zutabePos<1 || zutabePos>7));
+		int errenk=Taula.getNireTaula().getErrenkada(zutabePos-1);
+		Taula.getNireTaula().fitxaKolorezAldatu(zutabePos-1, errenk, txanda);
 		if (this.jokalariak[txanda].getKomodinErabilgarria()!=0) {
-			int errenk=Taula.getNireTaula().getErrenkada(zutabePos);
 			System.out.println("Zure komodina erabili nahi duzu? (Bai 'B' edo ez 'E' aukeratu)");
 			boolean komodinaErabili=this.komodinaErabiliNahi();
 			if (komodinaErabili) {
 				try {
-					if (this.jokalariak[txanda].getKomodinErabilgarria()==1 && this.bonbaErabiltzeaZentzurikEz(zutabePos, errenk, this.jokalariak[txanda].getKolorea())) {
+					if (this.jokalariak[txanda].getKomodinErabilgarria()==1 && this.bonbaErabiltzeaZentzurikEz(zutabePos-1, errenk)) {
 						throw new KomodinaErabiltzeaZentzurikEz();
 					}
-					else if (this.jokalariak[txanda].getKomodinErabilgarria()==2 && this.eraldatuErabiltzeaZentzurikEz(zutabePos, errenk)) {
+					else if (this.jokalariak[txanda].getKomodinErabilgarria()==2 && this.eraldatuErabiltzeaZentzurikEz(zutabePos-1, errenk)) {
 						throw new KomodinaErabiltzeaZentzurikEz();
 					}
 				}
@@ -86,12 +88,12 @@ public class Konekta4 {
 				}
 			}
 			if (komodinaErabili) {
-				Gelaxka gelaxka=Taula.getNireTaula().getGelaxka(zutabePos, errenk);
+				Gelaxka gelaxka=Taula.getNireTaula().getGelaxka(zutabePos-1, errenk);
 				if (gelaxka instanceof Bonba) {
-					((Bonba)gelaxka).ingurukoakDesagertu(zutabePos, errenk);
+					((Bonba)gelaxka).ingurukoakDesagertu(zutabePos-1, errenk);
 				}
 				else if (gelaxka instanceof Eraldatu) {
-					((Eraldatu)gelaxka).azpikoFitxaKolorezAldatu(zutabePos, errenk, this.jokalariak[txanda].getKolorea());
+					((Eraldatu)gelaxka).azpikoFitxaKolorezAldatu(zutabePos-1, errenk);
 				}
 			}
 		}
@@ -101,10 +103,10 @@ public class Konekta4 {
 	private int norenTxanda() {
 		int norenTxanda;
 		if (this.txanda%2!=0) {
-			norenTxanda=1;
+			norenTxanda=0;
 		}
 		else {
-			norenTxanda=2;
+			norenTxanda=1;
 		}
 		return norenTxanda;
 	}
@@ -140,9 +142,9 @@ public class Konekta4 {
 		return komodinaErabili;
 	}
 	
-	private boolean bonbaErabiltzeaZentzurikEz(int pZutab, int pErrenk, char pKolorea) {
+	private boolean bonbaErabiltzeaZentzurikEz(int pZutab, int pErrenk) {
 		boolean zentzurikEz=false;
-		if (Taula.getNireTaula().albokoakHutsik(pZutab, pErrenk) || Taula.getNireTaula().albokoakKoloreBerdina(pZutab, pErrenk, pKolorea)) {
+		if (Taula.getNireTaula().albokoakHutsik(pZutab, pErrenk) || Taula.getNireTaula().albokoakKoloreBerdina(pZutab, pErrenk)) {
 			zentzurikEz=true;
 		}
 		return zentzurikEz;
@@ -150,9 +152,13 @@ public class Konekta4 {
 	
 	private boolean eraldatuErabiltzeaZentzurikEz(int pZutab, int pErrenk) {
 		boolean zentzurikEz=false;
-		if (Taula.getNireTaula().azkenekoGelaxka(pZutab, pErrenk)) {
+		if (Taula.getNireTaula().azkenekoGelaxka(pErrenk) || Taula.getNireTaula().behekoaKoloreBerdina(pZutab, pErrenk)) {
 			zentzurikEz=true;
 		}
 		return zentzurikEz;
+	}
+	
+	public Jokalaria getJokalaria(int pTxanda) {
+		return this.jokalariak[pTxanda];
 	}
 }

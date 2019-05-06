@@ -10,8 +10,12 @@ public class Gelaxka {
 	}
 
 	//gainontzeko metodoak
-	public void gelaxkaEgikaritu(char pKolorea) {
-		this.kolorea=pKolorea;
-		//TODO
+	public void gelaxkaEgikaritu(int pTxanda) {
+		char kolorea=Konekta4.getNireKonekta4().getJokalaria(pTxanda).getKolorea();
+		this.kolorea=kolorea;
+	}
+	
+	public char getKolorea() {
+		return this.kolorea;
 	}
 }

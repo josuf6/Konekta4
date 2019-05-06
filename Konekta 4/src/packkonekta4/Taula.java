@@ -19,58 +19,113 @@ public class Taula {
 	}
 	
 	public boolean beteta() {
-		boolean beteta=false;
-		//TODO
+		boolean beteta=true;
+		int zutabe=0;
+		while (beteta && zutabe<this.taula.length) {
+			if (!this.zutabBeteta(zutabe)) {
+				beteta=false;
+			}
+			zutabe++;
+		}
 		return beteta;
 	}
 	
 	public boolean zutabBeteta(int pZutab) {
-		boolean beteta=false;
-		//TODO
+		boolean beteta=true;
+		int errenkada=0;
+		while (beteta && errenkada<this.taula[0].length) {
+			if (this.taula[pZutab][errenkada].getKolorea()==' ' || this.taula[pZutab][errenkada].getKolorea()=='K') {
+				beteta=false;
+			}
+			errenkada++;
+		}
 		return beteta;
 	}
 	
-	public void fitxaKolorezAldatu(int pZutab, char pKolorea) {
-		//TODO
+	public void fitxaKolorezAldatu(int pZutab, int pErrenk, int pTxanda) {
+		this.taula[pZutab][pErrenk].gelaxkaEgikaritu(pTxanda);
 	}
 	
 	public int getErrenkada(int pZutab) {
 		int errenkada=0;
-		//TODO
-		return errenkada;
+		boolean aurkituta=false;
+		while (!aurkituta && errenkada+1<this.taula[0].length) {
+			errenkada++;
+			if (this.taula[pZutab][errenkada].getKolorea()=='G' || this.taula[pZutab][errenkada].getKolorea()=='H') {
+				aurkituta=true;
+			}
+		}
+		return errenkada-1;
 	}
 	
-	public boolean albokoakHutsik(int x, int y) {
+	public boolean albokoakHutsik(int pZutab, int pErrenk) {
 		boolean hutsik=false;
-		
+		if (pZutab==0) {
+			if (this.taula[pZutab+1][pErrenk].getKolorea()==' ' || this.taula[pZutab+1][pErrenk].getKolorea()=='K') {
+				hutsik=true;
+			}
+		}
+		else if (pZutab==this.taula.length-1) {
+			if (this.taula[pZutab-1][pErrenk].getKolorea()==' ' || this.taula[pZutab-1][pErrenk].getKolorea()=='K') {
+				hutsik=true;
+			}
+		}
+		else {
+			if ((this.taula[pZutab+1][pErrenk].getKolorea()==' ' || this.taula[pZutab+1][pErrenk].getKolorea()=='K') || (this.taula[pZutab-1][pErrenk].getKolorea()==' ' || this.taula[pZutab-1][pErrenk].getKolorea()=='K')) {
+				hutsik=true;
+			}
+		}
 		return hutsik;
 	}
 	
-	public boolean albokoakKoloreBerdina(int x, int y) {
+	public boolean albokoakKoloreBerdina(int pZutab, int pErrenk) {
 		boolean berdina=false;
-		//TODO
+		char kolorea=Taula.getNireTaula().getGelaxka(pZutab, pErrenk).getKolorea();
+		if (pZutab==0) {
+			if (this.taula[pZutab+1][pErrenk].getKolorea()==kolorea) {
+				berdina=true;
+			}
+		}
+		else if (pZutab==this.taula.length-1) {
+			if (this.taula[pZutab-1][pErrenk].getKolorea()==kolorea) {
+				berdina=true;
+			}
+		}
+		else {
+			if (this.taula[pZutab+1][pErrenk].getKolorea()==kolorea || this.taula[pZutab-1][pErrenk].getKolorea()==kolorea) {
+				berdina=true;
+			}
+		}
 		return berdina;
 	}
 	
-	public boolean azkenekoGelaxka(int x, int y) {
+	public boolean azkenekoGelaxka(int pErrenk) {
 		boolean azkena=false;
-		if(y==this.taula[0].length-1){
+		if(pErrenk==this.taula[0].length-1){
 			azkena=true;
 		}
 		return azkena;
 	}
 	
+	public boolean behekoaKoloreBerdina(int pZutab, int pErrenk) {
+		boolean berdina=false;
+		if (!this.azkenekoGelaxka(pErrenk)) {
+			if (Taula.getNireTaula().getGelaxka(pZutab, pErrenk).getKolorea()==Taula.getNireTaula().getGelaxka(pZutab, pErrenk+1).getKolorea()) {
+				berdina=true;
+			}
+		}
+		return berdina;
+	}
+	
 	public Gelaxka getGelaxka(int pZutab, int pErrenk) {
-		Gelaxka gelaxka=null;
-		//TODO
-		return gelaxka;
+		return this.taula[pZutab][pErrenk];
 	}
 	
 	public void inprimatuTaula() {
 		System.out.println(" _____________________________");
-		for(int i=0;i<this.taula[0].length;i++){
-			for(int j=0;j<this.taula.length;j++){
-				System.out.print(" | "+taula[j][i]);
+		for (int i=0;i<this.taula[0].length;i++) {
+			for (int j=0;j<this.taula.length;j++) {
+				System.out.print(" | "+taula[j][i].getKolorea());
 			}
 			System.out.println(" |");
 			System.out.println(" _____________________________");

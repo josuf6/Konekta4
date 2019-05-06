@@ -9,9 +9,9 @@ public class Bonba extends Gelaxka {
 	}
 
 	//gainontzeko metodoak
-	public void gelaxkaEgikaritu(char pKolorea) {
-		super.gelaxkaEgikaritu(pKolorea);
-		//TODO
+	public void gelaxkaEgikaritu(char pTxanda) {
+		super.gelaxkaEgikaritu(pTxanda);
+		Konekta4.getNireKonekta4().getJokalaria(pTxanda).setKomodinErabilgarria(1);
 	}
 	
 	public void ingurukoakDesagertu(int x, int y) {
