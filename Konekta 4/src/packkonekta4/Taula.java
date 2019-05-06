@@ -34,6 +34,7 @@ public class Taula {
 		//TODO
 	}
 	
+<<<<<<< HEAD
 	public int getErrenkada(int pZutab) {
 		int errenkada=0;
 		//TODO
@@ -60,5 +61,15 @@ public class Taula {
 	
 	public void inprimatuTaula() {
 		//TODO
+=======
+	public void inprimatuTaula(Gelaxka[][] taula) {
+		//i errenkada eta j zutabeak
+		for(int i=0;i<this.taula.length;i++){
+			for(int j=0;j<this.taula[0].length;j++){
+				System.out.print(taula[i][j]+" ");
+			}
+			System.out.print("");
+		}
+>>>>>>> branch 'master' of https://github.com/josuf6/Konekta4
 	}
 }
