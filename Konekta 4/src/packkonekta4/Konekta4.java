@@ -74,6 +74,7 @@ public class Konekta4 {
 				try {
 					if (this.jokalariak[txanda].getKomodinErabilgarria()==1) {
 						//TODO
+						//TODO
 					}
 					else if (komodinaErabili && this.jokalariak[txanda].getKomodinErabilgarria()==2) {
 						//TODO
