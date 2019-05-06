@@ -66,6 +66,7 @@ public class Taula {
 	
 	public void inprimatuTaula(Gelaxka[][] taula) {
 		//i errenkada eta j zutabeak
+		System.out.println(" _____________________");
 		for(int i=0;i<this.taula.length;i++){
 			for(int j=0;j<this.taula[0].length;j++){
 				System.out.print(" | "+taula[i][j]);
