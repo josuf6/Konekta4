@@ -56,17 +56,13 @@ public class testTaula {
 
 	@Test
 	public void testAzkenekoGelaxka() {
-		assertTrue(tau.);
-	}
-
-	@Test
-	public void testGetGelaxka() {
-		fail("Not yet implemented");
+		assertTrue(tau.azkenekoGelaxka(5,5));
+		assertFalse(tau.azkenekoGelaxka(1,1));
 	}
 
 	@Test
 	public void testInprimatuTaula() {
-		   tau.inprimatuTaula(taula);
+		   tau.inprimatuTaula();
 	}
 
 	//eraikitzailea(k)
