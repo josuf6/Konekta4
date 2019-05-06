@@ -46,7 +46,7 @@ public class Taula {
 		return hutsik;
 	}
 	
-	public boolean albokoakKoloreBerdina(int x, int y, char pKolorea) {
+	public boolean albokoakKoloreBerdina(int x, int y) {
 		boolean berdina=false;
 		//TODO
 		return berdina;
@@ -54,7 +54,9 @@ public class Taula {
 	
 	public boolean azkenekoGelaxka(int x, int y) {
 		boolean azkena=false;
-		//TODO
+		if(y==5){
+			
+		}
 		return azkena;
 	}
 	
@@ -64,7 +66,7 @@ public class Taula {
 		return gelaxka;
 	}
 	
-	public void inprimatuTaula(Gelaxka[][] taula) {
+	public void inprimatuTaul) {
 		//i errenkada eta j zutabeak
 		for(int i=0;i<this.taula.length;i++){
 			for(int j=0;j<this.taula[0].length;j++){

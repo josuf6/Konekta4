@@ -11,8 +11,8 @@ public class TestGelaxka {
 	private Gelaxka g2;
 	@Before
 	public void setUp() throws Exception {
-		g1=new Gelaxka(' ');
-		g2=new Gelaxka(' ');
+		g1=new Gelaxka();
+		g2=new Gelaxka();
 	}
 	//atributuak
 
