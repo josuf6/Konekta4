@@ -41,7 +41,7 @@ public class Taula {
 	}
 	
 	public boolean albokoakHutsik(int x, int y) {
-		boolean hutsik=false;		
+		boolean hutsik=false;
 		
 		return hutsik;
 	}
