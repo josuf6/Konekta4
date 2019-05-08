@@ -122,6 +122,7 @@ public class Taula {
 	}
 	
 	public void inprimatuTaula() {
+		System.out.println("   1   2   3   4   5   6   7");
 		System.out.println(" _____________________________");
 		for (int i=0;i<this.taula[0].length;i++) {
 			for (int j=0;j<this.taula.length;j++) {
