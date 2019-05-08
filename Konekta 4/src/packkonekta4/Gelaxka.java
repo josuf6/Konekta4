@@ -18,4 +18,8 @@ public class Gelaxka {
 	public char getKolorea() {
 		return this.kolorea;
 	}
+	
+	public void setKolorea(char pKolorea) {
+		this.kolorea=pKolorea;
+	}
 }

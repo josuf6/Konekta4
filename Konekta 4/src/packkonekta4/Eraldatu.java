@@ -13,8 +13,4 @@ public class Eraldatu extends Gelaxka {
 		super.gelaxkaEgikaritu(pTxanda);
 		Konekta4.getNireKonekta4().getJokalaria(pTxanda).setKomodinErabilgarria(2);
 	}
-	
-	public void azpikoFitxaKolorezAldatu(int pZutab, int pErrenk) {
-		//TODO
-	}
 }

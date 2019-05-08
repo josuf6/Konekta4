@@ -1,16 +1,16 @@
 package packkonekta4;
 
+import java.nio.charset.MalformedInputException;
 import java.sql.Array;
 
 public class Konekta4 {
 	//atributuak
 	private static Konekta4 nireKonekta4=null;
-	private Jokalaria[] jokalariak;
+	private static Jokalaria[] jokalariak=new Jokalaria[2];
 	private int txanda;
 
 	//eraikitzailea(k)
 	private Konekta4() {
-		this.jokalariak=new Jokalaria[2];
 		this.txanda=1;
 	}
 
@@ -22,8 +22,43 @@ public class Konekta4 {
 		return nireKonekta4;
 	}
 	
+	public void main() {
+		this.partidaBatJolastu();
+	}
+	
 	public void jokoaHasieratu() {
-		//TODO
+		int bonbaKop=3;
+		int eraldatuKop=3;
+		int randomZut=0;
+		int randomErrenk=0;
+		int zutabea=0;
+		int errenkada=0;
+		while (bonbaKop>0) {
+			randomZut=(int)(Math.random()*7);
+			randomErrenk=(int)(Math.random()*6);
+			if (Taula.getNireTaula().getGelaxka(randomZut, randomErrenk)==null) {
+				Taula.getNireTaula().setGelaxka(randomZut, randomErrenk, 1);
+				bonbaKop--;
+			}
+		}
+		while (eraldatuKop>0) {
+			randomZut=(int)(Math.random()*7);
+			randomErrenk=(int)(Math.random()*6);
+			if (Taula.getNireTaula().getGelaxka(randomZut, randomErrenk)==null) {
+				Taula.getNireTaula().setGelaxka(randomZut, randomErrenk, 2);
+				eraldatuKop--;
+			}
+		}
+		while (zutabea<Taula.getNireTaula().getZutabeLuzera()) {
+			while (errenkada<Taula.getNireTaula().getErrenkadaLuzera()) {
+				if (Taula.getNireTaula().getGelaxka(zutabea, errenkada)==null) {
+					Taula.getNireTaula().setGelaxka(zutabea, errenkada, 0);
+				}
+				errenkada++;
+			}
+			errenkada=0;
+			zutabea++;
+		}
 	}
 	
 	public void partidaBatJolastu() {
@@ -35,20 +70,25 @@ public class Konekta4 {
 			this.hurrengoTxanda();
 		}
 		this.emaitza();
+		System.out.println("Beste partida bat jokatu nahi? (Bai 'B' edo ez 'E' aukeratu)");
+		boolean erantzuna=this.erantzuna();
+		if (erantzuna) {
+			this.partidaBatJolastu();
+		}
 	}
 	
 	private void jokalariakInskribatu() {
 		System.out.println("Lehenengo jokalaria, zure izena idatzi:");
 		String izena1=Teklatua.getNireTeklatua().irakurriString();
-		this.jokalariak[1]=new Jokalaria(izena1, 'G');
+		Konekta4.jokalariak[0]=new Jokalaria(izena1, 'G');
 		System.out.println("Bigarren jokalaria, zure izena idatzi:");
 		String izena2=Teklatua.getNireTeklatua().irakurriString();
-		this.jokalariak[2]=new Jokalaria(izena2, 'H');
+		Konekta4.jokalariak[1]=new Jokalaria(izena2, 'H');
 	}
 	
 	private void hurrengoTxanda() {
 		int txanda=this.norenTxanda();
-		System.out.println(this.jokalariak[txanda].getIzena()+"-(r)en txanda");
+		System.out.println(Konekta4.jokalariak[txanda].getIzena()+"-(r)en txanda");
 		int zutabePos=Teklatua.getNireTeklatua().irakurriOsoa();
 		do {
 			try {
@@ -70,10 +110,10 @@ public class Konekta4 {
 		} while (Taula.getNireTaula().zutabBeteta(zutabePos-1) && (zutabePos<1 || zutabePos>7));
 		int errenk=Taula.getNireTaula().getErrenkada(zutabePos-1);
 		Taula.getNireTaula().fitxaKolorezAldatu(zutabePos-1, errenk, txanda);
-		int komErabilgarria=this.jokalariak[txanda].getKomodinErabilgarria();
+		int komErabilgarria=Konekta4.jokalariak[txanda].getKomodinErabilgarria();
 		if (komErabilgarria!=0) {
 			System.out.println("Zure komodina erabili nahi duzu? (Bai 'B' edo ez 'E' aukeratu)");
-			boolean komodinaErabili=this.komodinaErabiliNahi();
+			boolean komodinaErabili=this.erantzuna();
 			if (komodinaErabili) {
 				try {
 					if ((komErabilgarria==1 && this.bonbaErabiltzeaZentzurikEz(zutabePos-1, errenk)) || (komErabilgarria==2 && this.eraldatuErabiltzeaZentzurikEz(zutabePos-1, errenk))) {
@@ -82,17 +122,17 @@ public class Konekta4 {
 				}
 				catch (KomodinaErabiltzeaZentzurikEz e) {
 					e.inprimatu();
-					komodinaErabili=this.komodinaErabiliNahi();
+					komodinaErabili=this.erantzuna();
 				}
 			}
 			if (komodinaErabili) {
-				Gelaxka gelaxka=Taula.getNireTaula().getGelaxka(zutabePos-1, errenk);
-				if (gelaxka instanceof Bonba) {
-					((Bonba)gelaxka).ingurukoakDesagertu(zutabePos-1, errenk);
+				if (komErabilgarria==1) {
+					Taula.getNireTaula().ingurukoakDesagertu(zutabePos-1, errenk);
 				}
-				else if (gelaxka instanceof Eraldatu) {
-					((Eraldatu)gelaxka).azpikoFitxaKolorezAldatu(zutabePos-1, errenk);
+				else if (komErabilgarria==2) {
+					Taula.getNireTaula().azpikoFitxaKolorezAldatu(zutabePos-1, errenk);
 				}
+				Konekta4.jokalariak[txanda].setKomodinErabilgarria(0);
 			}
 		}
 		if (!this.amaituta()) {
@@ -121,7 +161,7 @@ public class Konekta4 {
 	
 	private void emaitza() {
 		if (this.irabazleaDago()) {
-			String irabazlea=this.jokalariak[this.norenTxanda()].getIzena();
+			String irabazlea=Konekta4.jokalariak[this.norenTxanda()].getIzena();
 			System.out.println("Zorionak, "+irabazlea+"! Partida irabazi duzu!");
 		}
 		else {
@@ -129,13 +169,13 @@ public class Konekta4 {
 		}
 	}
 	
-	private boolean komodinaErabiliNahi() {
-		boolean komodinaErabili=false;
+	private boolean erantzuna() {
+		boolean erantzunarenEmaitza=false;
 		boolean erantzunZuzena=false;
 		char erantzuna=Teklatua.getNireTeklatua().irakurriChar();
 		while (!erantzunZuzena) {
 			if (erantzuna=='b' || erantzuna=='B') {
-				komodinaErabili=true;
+				erantzunarenEmaitza=true;
 				erantzunZuzena=true;
 			}
 			else if (erantzuna=='e' || erantzuna=='E') {
@@ -145,7 +185,7 @@ public class Konekta4 {
 				System.out.println("Erantzun egoki bat eman, mesedez");
 			}
 		}
-		return komodinaErabili;
+		return erantzunarenEmaitza;
 	}
 	
 	private boolean bonbaErabiltzeaZentzurikEz(int pZutab, int pErrenk) {
@@ -166,11 +206,14 @@ public class Konekta4 {
 	
 	private boolean irabazleaDago() {
 		boolean irabazlea=false;
-		//TODO
+		char kolorea=Konekta4.jokalariak[this.norenTxanda()].getKolorea();
+		if (Taula.getNireTaula().zutabeakBegiratu(kolorea) || Taula.getNireTaula().errenkadakBegiratu(kolorea) || Taula.getNireTaula().diagonalakBegiratu(kolorea)) {
+			irabazlea=true;
+		}
 		return irabazlea;
 	}
 	
 	public Jokalaria getJokalaria(int pTxanda) {
-		return this.jokalariak[pTxanda];
+		return Konekta4.jokalariak[pTxanda];
 	}
 }
