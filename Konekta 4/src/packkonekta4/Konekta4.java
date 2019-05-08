@@ -34,7 +34,7 @@ public class Konekta4 {
 		while (!this.amaituta()) {
 			this.hurrengoTxanda();
 		}
-		this.irabazlea();
+		this.emaitza();
 	}
 	
 	private void jokalariakInskribatu() {
@@ -70,15 +70,13 @@ public class Konekta4 {
 		} while (Taula.getNireTaula().zutabBeteta(zutabePos-1) && (zutabePos<1 || zutabePos>7));
 		int errenk=Taula.getNireTaula().getErrenkada(zutabePos-1);
 		Taula.getNireTaula().fitxaKolorezAldatu(zutabePos-1, errenk, txanda);
-		if (this.jokalariak[txanda].getKomodinErabilgarria()!=0) {
+		int komErabilgarria=this.jokalariak[txanda].getKomodinErabilgarria();
+		if (komErabilgarria!=0) {
 			System.out.println("Zure komodina erabili nahi duzu? (Bai 'B' edo ez 'E' aukeratu)");
 			boolean komodinaErabili=this.komodinaErabiliNahi();
 			if (komodinaErabili) {
 				try {
-					if (this.jokalariak[txanda].getKomodinErabilgarria()==1 && this.bonbaErabiltzeaZentzurikEz(zutabePos-1, errenk)) {
-						throw new KomodinaErabiltzeaZentzurikEz();
-					}
-					else if (this.jokalariak[txanda].getKomodinErabilgarria()==2 && this.eraldatuErabiltzeaZentzurikEz(zutabePos-1, errenk)) {
+					if ((komErabilgarria==1 && this.bonbaErabiltzeaZentzurikEz(zutabePos-1, errenk)) || (komErabilgarria==2 && this.eraldatuErabiltzeaZentzurikEz(zutabePos-1, errenk))) {
 						throw new KomodinaErabiltzeaZentzurikEz();
 					}
 				}
@@ -97,7 +95,9 @@ public class Konekta4 {
 				}
 			}
 		}
-		this.txanda=this.txanda+1;
+		if (!this.amaituta()) {
+			this.txanda=this.txanda+1;
+		}
 	}
 	
 	private int norenTxanda() {
@@ -113,14 +113,20 @@ public class Konekta4 {
 	
 	private boolean amaituta() {
 		boolean amaituta=false;
-		//TODO
+		if (Taula.getNireTaula().beteta() || this.irabazleaDago()) {
+			amaituta=true;
+		}
 		return amaituta;
 	}
 	
-	private void irabazlea() {
-		String irabazlea=null;
-		//TODO
-		System.out.println("Partidaren irabazlea: "+irabazlea);
+	private void emaitza() {
+		if (this.irabazleaDago()) {
+			String irabazlea=this.jokalariak[this.norenTxanda()].getIzena();
+			System.out.println("Zorionak, "+irabazlea+"! Partida irabazi duzu!");
+		}
+		else {
+			System.out.println("Partida bukatu da, baina irabazlerik egon gabe.");
+		}
 	}
 	
 	private boolean komodinaErabiliNahi() {
@@ -156,6 +162,12 @@ public class Konekta4 {
 			zentzurikEz=true;
 		}
 		return zentzurikEz;
+	}
+	
+	private boolean irabazleaDago() {
+		boolean irabazlea=false;
+		//TODO
+		return irabazlea;
 	}
 	
 	public Jokalaria getJokalaria(int pTxanda) {
