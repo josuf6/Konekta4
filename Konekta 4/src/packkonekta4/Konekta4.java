@@ -168,6 +168,8 @@ public class Konekta4 {
 		else {
 			System.out.println("Partida bukatu da, baina ez da irabazlerik egon.");
 		}
+		System.out.println("Sakatu edozein tekla bukatzeko");
+		Teklatua.getNireTeklatua().irakurriEdozeinTekla();
 	}
 	
 	private boolean erantzuna() {
@@ -183,7 +185,7 @@ public class Konekta4 {
 				erantzunZuzena=true;
 			}
 			else {
-				System.out.println("Erantzun egoki bat eman, mesedez");
+				System.out.println("Erantzun egoki bat eman, mesedez.");
 				erantzuna=Teklatua.getNireTeklatua().irakurriChar();
 			}
 		}

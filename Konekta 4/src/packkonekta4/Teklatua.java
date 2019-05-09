@@ -45,4 +45,13 @@ public class Teklatua {
 		char karakterea=sc.next().charAt(0);
 		return karakterea;
 	}
+	
+	public void irakurriEdozeinTekla() {
+		try {
+			System.in.read();
+		}
+		catch (Exception e) {
+			
+		}
+	}
 }
