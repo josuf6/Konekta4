@@ -58,7 +58,7 @@ public class Konekta4 {
 	}
 	
 	public void partidaBatJolastu() {
-		System.out.println("ONGI ETORRI KONEKTA 4 JOKORA!");
+		System.out.println("ONGI ETORRI KONEKTA 4 EXTREME EDITION-ERA!");
 		System.out.println("");
 		this.jokalariakInskribatu();
 		System.out.println("PARTIDA HAS DADILA!");
