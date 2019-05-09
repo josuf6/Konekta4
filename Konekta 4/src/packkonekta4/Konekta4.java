@@ -167,7 +167,7 @@ public class Konekta4 {
 		else {
 			System.out.println("Partida bukatu da, baina ez da irabazlerik egon.");
 		}
-		System.out.println("Sakatu edozein tekla bukatzeko");
+		System.out.println("Sakatu enter bukatzeko");
 		Teklatua.getNireTeklatua().irakurriEdozeinTekla();
 	}
 	
