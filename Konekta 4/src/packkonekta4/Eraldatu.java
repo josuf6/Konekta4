@@ -11,6 +11,5 @@ public class Eraldatu extends Gelaxka {
 	//gainontzeko metodoak
 	public void gelaxkaEgikaritu(char pTxanda) {
 		super.gelaxkaEgikaritu(pTxanda);
-		Konekta4.getNireKonekta4().getJokalaria(pTxanda).setKomodinErabilgarria(2);
 	}
 }

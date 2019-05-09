@@ -22,10 +22,6 @@ public class Konekta4 {
 		return nireKonekta4;
 	}
 	
-	public void main() {
-		this.partidaBatJolastu();
-	}
-	
 	public void jokoaHasieratu() {
 		int bonbaKop=3;
 		int eraldatuKop=3;
@@ -63,32 +59,31 @@ public class Konekta4 {
 	
 	public void partidaBatJolastu() {
 		System.out.println("ONGI ETORRI KONEKTA 4 JOKORA!");
+		System.out.println("");
 		this.jokalariakInskribatu();
 		System.out.println("PARTIDA HAS DADILA!");
 		this.jokoaHasieratu();
+		Taula.getNireTaula().inprimatuTaula();
 		while (!this.amaituta()) {
 			this.hurrengoTxanda();
 		}
 		this.emaitza();
-		System.out.println("Beste partida bat jokatu nahi? (Bai 'B' edo ez 'E' aukeratu)");
-		boolean erantzuna=this.erantzuna();
-		if (erantzuna) {
-			this.partidaBatJolastu();
-		}
 	}
 	
 	private void jokalariakInskribatu() {
 		System.out.println("Lehenengo jokalaria, zure izena idatzi:");
 		String izena1=Teklatua.getNireTeklatua().irakurriString();
 		Konekta4.jokalariak[0]=new Jokalaria(izena1, 'G');
+		System.out.println("");
 		System.out.println("Bigarren jokalaria, zure izena idatzi:");
 		String izena2=Teklatua.getNireTeklatua().irakurriString();
 		Konekta4.jokalariak[1]=new Jokalaria(izena2, 'H');
+		System.out.println("");
 	}
 	
 	private void hurrengoTxanda() {
 		int txanda=this.norenTxanda();
-		System.out.println(Konekta4.jokalariak[txanda].getIzena()+"-(r)en txanda");
+		System.out.println(Konekta4.jokalariak[txanda].getIzena()+"-(r)en txanda:");
 		int zutabePos=Teklatua.getNireTeklatua().irakurriOsoa();
 		do {
 			try {
@@ -107,32 +102,37 @@ public class Konekta4 {
 				e.inprimatu();
 				zutabePos=Teklatua.getNireTeklatua().irakurriOsoa();
 			}
-		} while (Taula.getNireTaula().zutabBeteta(zutabePos-1) && (zutabePos<1 || zutabePos>7));
+		} while (Taula.getNireTaula().zutabBeteta(zutabePos-1) || zutabePos<1 || zutabePos>7);
 		int errenk=Taula.getNireTaula().getErrenkada(zutabePos-1);
 		Taula.getNireTaula().fitxaKolorezAldatu(zutabePos-1, errenk, txanda);
-		int komErabilgarria=Konekta4.jokalariak[txanda].getKomodinErabilgarria();
-		if (komErabilgarria!=0) {
-			System.out.println("Zure komodina erabili nahi duzu? (Bai 'B' edo ez 'E' aukeratu)");
-			boolean komodinaErabili=this.erantzuna();
-			if (komodinaErabili) {
-				try {
-					if ((komErabilgarria==1 && this.bonbaErabiltzeaZentzurikEz(zutabePos-1, errenk)) || (komErabilgarria==2 && this.eraldatuErabiltzeaZentzurikEz(zutabePos-1, errenk))) {
-						throw new KomodinaErabiltzeaZentzurikEz();
+		Taula.getNireTaula().inprimatuTaula();
+		if (!this.amaituta()) {
+			int komErabilgarria=Konekta4.jokalariak[txanda].getKomodinErabilgarria();
+			if (komErabilgarria!=0) {
+				System.out.println(Konekta4.jokalariak[txanda].getIzena()+", zure komodina erabili nahi duzu? (Bai 'B' edo ez 'E' aukeratu)");
+				boolean komodinaErabili=this.erantzuna();
+				System.out.println("");
+				if (komodinaErabili) {
+					try {
+						if ((komErabilgarria==1 && this.bonbaErabiltzeaZentzurikEz(zutabePos-1, errenk)) || (komErabilgarria==2 && this.eraldatuErabiltzeaZentzurikEz(zutabePos-1, errenk))) {
+							throw new KomodinaErabiltzeaZentzurikEz();
+						}
+					}
+					catch (KomodinaErabiltzeaZentzurikEz e) {
+						e.inprimatu();
+						komodinaErabili=this.erantzuna();
 					}
 				}
-				catch (KomodinaErabiltzeaZentzurikEz e) {
-					e.inprimatu();
-					komodinaErabili=this.erantzuna();
+				if (komodinaErabili) {
+					if (komErabilgarria==1) {
+						Taula.getNireTaula().ingurukoakDesagertu(zutabePos-1, errenk);
+					}
+					else if (komErabilgarria==2) {
+						Taula.getNireTaula().azpikoFitxaKolorezAldatu(zutabePos-1, errenk);
+					}
+					Konekta4.jokalariak[txanda].setKomodinErabilgarria(0);
+					Taula.getNireTaula().inprimatuTaula();
 				}
-			}
-			if (komodinaErabili) {
-				if (komErabilgarria==1) {
-					Taula.getNireTaula().ingurukoakDesagertu(zutabePos-1, errenk);
-				}
-				else if (komErabilgarria==2) {
-					Taula.getNireTaula().azpikoFitxaKolorezAldatu(zutabePos-1, errenk);
-				}
-				Konekta4.jokalariak[txanda].setKomodinErabilgarria(0);
 			}
 		}
 		if (!this.amaituta()) {
@@ -140,7 +140,7 @@ public class Konekta4 {
 		}
 	}
 	
-	private int norenTxanda() {
+	public int norenTxanda() {
 		int norenTxanda;
 		if (this.txanda%2!=0) {
 			norenTxanda=0;
@@ -165,7 +165,7 @@ public class Konekta4 {
 			System.out.println("Zorionak, "+irabazlea+"! Partida irabazi duzu!");
 		}
 		else {
-			System.out.println("Partida bukatu da, baina irabazlerik egon gabe.");
+			System.out.println("Partida bukatu da, baina ez da irabazlerik egon.");
 		}
 	}
 	
@@ -183,6 +183,7 @@ public class Konekta4 {
 			}
 			else {
 				System.out.println("Erantzun egoki bat eman, mesedez");
+				erantzuna=Teklatua.getNireTeklatua().irakurriChar();
 			}
 		}
 		return erantzunarenEmaitza;

@@ -30,11 +30,11 @@ public class Taula {
 	}
 	
 	public int getZutabeLuzera() {
-		return this.getZutabeLuzera();
+		return Taula.taula.length;
 	}
 	
 	public int getErrenkadaLuzera() {
-		return this.getErrenkadaLuzera();
+		return Taula.taula[0].length;
 	}
 	
 	public boolean beteta() {
@@ -62,27 +62,32 @@ public class Taula {
 	}
 	
 	public void fitxaKolorezAldatu(int pZutab, int pErrenk, int pTxanda) {
+		Gelaxka gelaxka=Taula.taula[pZutab][pErrenk];
+		if (gelaxka instanceof Bonba) {
+			Konekta4.getNireKonekta4().getJokalaria(pTxanda).setKomodinErabilgarria(1);
+		}
+		else if (gelaxka instanceof Eraldatu) {
+			Konekta4.getNireKonekta4().getJokalaria(pTxanda).setKomodinErabilgarria(2);
+		}
+		Taula.taula[pZutab][pErrenk]=new Gelaxka();
 		Taula.taula[pZutab][pErrenk].gelaxkaEgikaritu(pTxanda);
 	}
 	
 	public int getErrenkada(int pZutab) {
-		int errenkada=0;
+		int errenkada=Taula.nireTaula.getErrenkadaLuzera();
 		boolean aurkituta=false;
-		while (!aurkituta && errenkada+1<this.getErrenkadaLuzera()) {
-			errenkada++;
-			if (Taula.taula[pZutab][errenkada].getKolorea()=='G' || Taula.taula[pZutab][errenkada].getKolorea()=='H') {
+		while (!aurkituta && errenkada>0) {
+			errenkada--;
+			if (Taula.taula[pZutab][errenkada].getKolorea()==' ' || Taula.taula[pZutab][errenkada].getKolorea()=='K') {
 				aurkituta=true;
 			}
 		}
-		return errenkada-1;
+		return errenkada;
 	}
 	
 	public boolean albokoakHutsik(int pZutab, int pErrenk) {
 		boolean hutsik=true;
-		if (!Taula.nireTaula.azkenekoGelaxka(pErrenk)) {
-			hutsik=false;
-		}
-		else if (pZutab==0) {
+		if (pZutab==0) {
 			if (Taula.taula[pZutab+1][pErrenk].getKolorea()!=' ' && Taula.taula[pZutab+1][pErrenk].getKolorea()!='K') {
 				hutsik=false;
 			}
@@ -104,24 +109,30 @@ public class Taula {
 		boolean berdina=false;
 		char kolorea=Taula.nireTaula.getGelaxka(pZutab, pErrenk).getKolorea();
 		if (pZutab==0) {
-			if (Taula.nireTaula.azkenekoGelaxka(pErrenk) && Taula.taula[pZutab+1][pErrenk].getKolorea()==kolorea) {
-				berdina=true;
+			if (Taula.nireTaula.azkenekoGelaxka(pErrenk)) {
+				if (Taula.taula[pZutab+1][pErrenk].getKolorea()==kolorea) {
+					berdina=true;
+				}
 			}
 			else if (Taula.taula[pZutab+1][pErrenk].getKolorea()==kolorea || Taula.taula[pZutab][pErrenk+1].getKolorea()==kolorea) {
 				berdina=true;
 			}
 		}
 		else if (pZutab==this.getZutabeLuzera()-1) {
-			if (Taula.nireTaula.azkenekoGelaxka(pErrenk) && Taula.taula[pZutab-1][pErrenk].getKolorea()==kolorea) {
-				berdina=true;
+			if (Taula.nireTaula.azkenekoGelaxka(pErrenk)) {
+				if (Taula.taula[pZutab-1][pErrenk].getKolorea()==kolorea) {
+					berdina=true;
+				}
 			}
 			else if (Taula.taula[pZutab-1][pErrenk].getKolorea()==kolorea || Taula.taula[pZutab][pErrenk+1].getKolorea()==kolorea) {
 				berdina=true;
 			}
 		}
 		else {
-			if (Taula.nireTaula.azkenekoGelaxka(pErrenk) && (Taula.taula[pZutab+1][pErrenk].getKolorea()==kolorea || Taula.taula[pZutab-1][pErrenk].getKolorea()==kolorea)) {
-				berdina=true;
+			if (Taula.nireTaula.azkenekoGelaxka(pErrenk)) {
+				if (Taula.taula[pZutab+1][pErrenk].getKolorea()==kolorea || Taula.taula[pZutab-1][pErrenk].getKolorea()==kolorea) {
+					berdina=true;
+				}
 			}
 			else if (Taula.taula[pZutab+1][pErrenk].getKolorea()==kolorea || Taula.taula[pZutab-1][pErrenk].getKolorea()==kolorea || Taula.taula[pZutab][pErrenk+1].getKolorea()==kolorea) {
 				berdina=true;
@@ -245,6 +256,8 @@ public class Taula {
 							aukera=false;
 						}
 					}
+					zutabeAux=0;
+					errenkadaAux=0;
 				}
 				aukera=true;
 				if (jarraian==0 && zutabea>2) {
@@ -266,6 +279,8 @@ public class Taula {
 							aukera=false;
 						}
 					}
+					zutabeAux=0;
+					errenkadaAux=0;
 				}
 				aukera=true;
 				zutabea++;
@@ -280,9 +295,6 @@ public class Taula {
 	}
 	
 	public void ingurukoakDesagertu(int pZutab, int pErrenk) {
-		if (!Taula.nireTaula.azkenekoGelaxka(pErrenk)) {
-			Taula.nireTaula.getGelaxka(pZutab, pErrenk+1).setKolorea(' ');
-		}
 		if (pZutab>0) {
 			Taula.nireTaula.getGelaxka(pZutab-1, pErrenk).setKolorea(' ');
 		}
@@ -308,16 +320,25 @@ public class Taula {
 		int zutabea=0;
 		int errenkada=this.getErrenkadaLuzera()-1;
 		int errenkadaAux=0;
+		boolean hutsik=false;
 		while (zutabea<this.getZutabeLuzera()) {
 			while (errenkada>0) {
-				if (Taula.taula[zutabea][errenkada].getKolorea()==' ' && Taula.taula[zutabea][errenkada-1].getKolorea()!=' ') {
-					while (errenkada-errenkadaAux>0) {
-						Taula.taula[zutabea][errenkada-errenkadaAux].setKolorea(Taula.taula[zutabea][errenkada-errenkadaAux].getKolorea());
-						errenkadaAux++;
+				if (Taula.taula[zutabea][errenkada].getKolorea()==' ') {
+					if (Taula.taula[zutabea][errenkada-1].getKolorea()!=' ' && Taula.taula[zutabea][errenkada-1].getKolorea()!='K') {
+						errenkadaAux=errenkada;
+						while (errenkadaAux>0 && !hutsik) {
+							if (Taula.taula[zutabea][errenkadaAux-1].getKolorea()!=' ' && Taula.taula[zutabea][errenkadaAux-1].getKolorea()!='K') {
+								Taula.taula[zutabea][errenkadaAux].setKolorea(Taula.taula[zutabea][errenkadaAux-1].getKolorea());
+							}
+							else {
+								hutsik=true;
+							}
+							errenkadaAux--;
+						}
+						Taula.taula[zutabea][errenkadaAux].setKolorea(' ');
+						hutsik=true;
 					}
-					Taula.taula[zutabea][0].setKolorea(' ');
 				}
-				errenkadaAux=0;
 				errenkada--;
 			}
 			errenkada=this.getErrenkadaLuzera()-1;
@@ -330,6 +351,7 @@ public class Taula {
 	}
 	
 	public void inprimatuTaula() {
+		System.out.println("");
 		System.out.println("   1   2   3   4   5   6   7");
 		System.out.println(" _____________________________");
 		for (int i=0;i<this.getErrenkadaLuzera();i++) {
@@ -339,5 +361,29 @@ public class Taula {
 			System.out.println(" |");
 			System.out.println(" _____________________________");
 		}
+		String komodin1;
+		String komodin2;
+		if (Konekta4.getNireKonekta4().getJokalaria(0).getKomodinErabilgarria()==0) {
+			komodin1="Bat ere ez";
+		}
+		else if (Konekta4.getNireKonekta4().getJokalaria(0).getKomodinErabilgarria()==1) {
+			komodin1="Bonba";
+		}
+		else {
+			komodin1="Eraldatu";
+		}
+		if (Konekta4.getNireKonekta4().getJokalaria(1).getKomodinErabilgarria()==0) {
+			komodin2="Bat ere ez";
+		}
+		else if (Konekta4.getNireKonekta4().getJokalaria(1).getKomodinErabilgarria()==1) {
+			komodin2="Bonba";
+		}
+		else {
+			komodin2="Eraldatu";
+		}
+		System.out.println("");
+		System.out.println(Konekta4.getNireKonekta4().getJokalaria(0).getIzena()+"-(r)en komodin erabilgarria: "+komodin1);
+		System.out.println(Konekta4.getNireKonekta4().getJokalaria(1).getIzena()+"-(r)en komodin erabilgarria: "+komodin2);
+		System.out.println("");
 	}
 }
