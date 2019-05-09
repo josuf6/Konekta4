@@ -347,7 +347,9 @@ public class Taula {
 				}
 			}
 		}
-		Taula.taula[pZutab][pErrenk].setKolorea(' ');
+		if (Taula.taula[pZutab][pErrenk].getKolorea()!=' ' && Taula.taula[pZutab][pErrenk].getKolorea()!='K') {
+			Taula.taula[pZutab][pErrenk].setKolorea(' ');
+		}
 	}
 	
 	public Gelaxka getGelaxka(int pZutab, int pErrenk) {
