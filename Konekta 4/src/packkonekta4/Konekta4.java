@@ -68,7 +68,6 @@ public class Konekta4 {
 			this.hurrengoTxanda();
 		}
 		this.emaitza();
-		System.out.println("Eskerrik asko jokatzeagatik. Agur.");
 	}
 	
 	private void jokalariakInskribatu() {
