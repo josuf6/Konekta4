@@ -87,19 +87,21 @@ public class Taula {
 	
 	public boolean albokoakHutsik(int pZutab, int pErrenk) {
 		boolean hutsik=true;
-		if (pZutab==0) {
-			if (Taula.taula[pZutab+1][pErrenk].getKolorea()!=' ' && Taula.taula[pZutab+1][pErrenk].getKolorea()!='K') {
-				hutsik=false;
+		if (!Taula.nireTaula.azkenekoGelaxka(pErrenk)) {
+			if (pZutab==0) {
+				if (Taula.taula[pZutab+1][pErrenk].getKolorea()!=' ' && Taula.taula[pZutab+1][pErrenk].getKolorea()!='K') {
+					hutsik=false;
+				}
 			}
-		}
-		else if (pZutab==this.getZutabeLuzera()-1) {
-			if (Taula.taula[pZutab-1][pErrenk].getKolorea()!=' ' && Taula.taula[pZutab-1][pErrenk].getKolorea()!='K') {
-				hutsik=false;
+			else if (pZutab==this.getZutabeLuzera()-1) {
+				if (Taula.taula[pZutab-1][pErrenk].getKolorea()!=' ' && Taula.taula[pZutab-1][pErrenk].getKolorea()!='K') {
+					hutsik=false;
+				}
 			}
-		}
-		else {
-			if ((Taula.taula[pZutab+1][pErrenk].getKolorea()!=' ' && Taula.taula[pZutab+1][pErrenk].getKolorea()!='K') || (Taula.taula[pZutab-1][pErrenk].getKolorea()!=' ' && Taula.taula[pZutab-1][pErrenk].getKolorea()!='K')) {
-				hutsik=false;
+			else {
+				if ((Taula.taula[pZutab+1][pErrenk].getKolorea()!=' ' && Taula.taula[pZutab+1][pErrenk].getKolorea()!='K') || (Taula.taula[pZutab-1][pErrenk].getKolorea()!=' ' && Taula.taula[pZutab-1][pErrenk].getKolorea()!='K')) {
+					hutsik=false;
+				}
 			}
 		}
 		return hutsik;
