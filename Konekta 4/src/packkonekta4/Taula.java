@@ -295,13 +295,16 @@ public class Taula {
 	}
 	
 	public void ingurukoakDesagertu(int pZutab, int pErrenk) {
+		if (!Taula.nireTaula.azkenekoGelaxka(pErrenk)) {
+			Taula.nireTaula.getGelaxka(pZutab, pErrenk+1).setKolorea(' ');
+		}
 		if (pZutab>0) {
 			Taula.nireTaula.getGelaxka(pZutab-1, pErrenk).setKolorea(' ');
 		}
 		if (pZutab<this.getZutabeLuzera()-1) {
 			Taula.nireTaula.getGelaxka(pZutab+1, pErrenk).setKolorea(' ');
 		}
-		Taula.nireTaula.egokituTaula();
+		Taula.nireTaula.egokituTaula(pZutab, pErrenk);
 	}
 	
 	public void azpikoFitxaKolorezAldatu(int pZutab, int pErrenk) {
@@ -316,34 +319,35 @@ public class Taula {
 		}
 	}
 	
-	private void egokituTaula() {
-		int zutabea=0;
-		int errenkada=this.getErrenkadaLuzera()-1;
-		int errenkadaAux=0;
-		boolean hutsik=false;
-		while (zutabea<this.getZutabeLuzera()) {
-			while (errenkada>0) {
-				if (Taula.taula[zutabea][errenkada].getKolorea()==' ') {
-					if (Taula.taula[zutabea][errenkada-1].getKolorea()!=' ' && Taula.taula[zutabea][errenkada-1].getKolorea()!='K') {
-						errenkadaAux=errenkada;
-						while (errenkadaAux>0 && !hutsik) {
-							if (Taula.taula[zutabea][errenkadaAux-1].getKolorea()!=' ' && Taula.taula[zutabea][errenkadaAux-1].getKolorea()!='K') {
-								Taula.taula[zutabea][errenkadaAux].setKolorea(Taula.taula[zutabea][errenkadaAux-1].getKolorea());
-							}
-							else {
-								hutsik=true;
-							}
-							errenkadaAux--;
-						}
-						Taula.taula[zutabea][errenkadaAux].setKolorea(' ');
-						hutsik=true;
-					}
-				}
-				errenkada--;
-			}
-			errenkada=this.getErrenkadaLuzera()-1;
-			zutabea++;
+	private void egokituTaula(int pZutab, int pErrenk) {
+		if (!Taula.nireTaula.azkenekoGelaxka(pErrenk)) {
+			Taula.nireTaula.egokituZutabea(pZutab, pErrenk+1);
 		}
+		if (pZutab>0) {
+			Taula.nireTaula.egokituZutabea(pZutab-1, pErrenk);
+		}
+		if (pZutab<this.getZutabeLuzera()-1) {
+			Taula.nireTaula.egokituZutabea(pZutab+1, pErrenk);
+		}
+	}
+	
+	private void egokituZutabea(int pZutab, int pErrenk) {
+		boolean amaituta=false;
+		while (!amaituta) {
+			if (pErrenk==0) {
+				amaituta=true;
+			}
+			if (!amaituta) {
+				if (Taula.taula[pZutab][pErrenk-1].getKolorea()!=' ' && Taula.taula[pZutab][pErrenk-1].getKolorea()!='K') {
+					Taula.taula[pZutab][pErrenk].setKolorea(Taula.taula[pZutab][pErrenk-1].getKolorea());
+					pErrenk--;
+				}
+				else {
+					amaituta=true;
+				}
+			}
+		}
+		Taula.taula[pZutab][pErrenk].setKolorea(' ');
 	}
 	
 	public Gelaxka getGelaxka(int pZutab, int pErrenk) {

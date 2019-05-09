@@ -22,8 +22,18 @@ public class Teklatua {
 	}
 	
 	public int irakurriOsoa() {
-		int zenb = this.sc.nextInt();
-		return zenb;
+		String zenb = this.irakurriString();
+		boolean egokia=false;
+		do {
+			try {
+				Integer.parseInt(zenb);
+				egokia=true;
+			}
+			catch (NumberFormatException e) {
+				zenb=this.irakurriString();
+			}
+		} while (!egokia);
+		return Integer.parseInt(zenb);
 	}
 	
 	public String irakurriString() {
