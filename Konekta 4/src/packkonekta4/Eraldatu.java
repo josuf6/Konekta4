@@ -9,7 +9,7 @@ public class Eraldatu extends Gelaxka {
 	}
 
 	//gainontzeko metodoak
-	public void gelaxkaEgikaritu(char pTxanda) {
+	public void gelaxkaEgikaritu(int pTxanda) {
 		super.gelaxkaEgikaritu(pTxanda);
 	}
 }

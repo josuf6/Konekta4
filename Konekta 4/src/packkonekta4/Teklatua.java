@@ -22,36 +22,47 @@ public class Teklatua {
 	}
 	
 	public int irakurriOsoa() {
-		String zenb = this.irakurriString();
+		String zenb=this.irakurriString();
 		boolean egokia=false;
 		do {
-			try {
-				Integer.parseInt(zenb);
-				egokia=true;
-			}
-			catch (NumberFormatException e) {
+			if (zenb.isEmpty()) {
 				zenb=this.irakurriString();
+			}
+			else {
+				try {
+					Integer.parseInt(zenb);
+					egokia=true;
+				}
+				catch (NumberFormatException e) {
+					System.out.println("Bakarrik zenbaki osoak onartzen dira.");
+					zenb=this.irakurriString();
+				}
 			}
 		} while (!egokia);
 		return Integer.parseInt(zenb);
 	}
 	
 	public String irakurriString() {
-		String mezua = this.sc.nextLine();
+		String mezua=this.sc.nextLine();
 		return mezua;
 	}
 	
 	public char irakurriChar() {
-		char karakterea=sc.next().charAt(0);
-		return karakterea;
+		String karakterea=this.irakurriString();
+		boolean egokia=false;
+		do {
+			if (karakterea.length()>1) {
+				System.out.println("Bakarrik karaktereak onartzen dira.");
+				karakterea=this.irakurriString();
+			}
+			else {
+				egokia=true;
+			}
+		} while (!egokia);
+		return karakterea.charAt(0);
 	}
 	
-	public void irakurriEdozeinTekla() {
-		try {
-			System.in.read();
-		}
-		catch (Exception e) {
-			
-		}
+	public void irakurriEnter() {
+		this.sc.nextLine();
 	}
 }

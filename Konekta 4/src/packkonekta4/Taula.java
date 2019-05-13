@@ -17,7 +17,7 @@ public class Taula {
 		return nireTaula;
 	}
 	
-	public void setGelaxka (int pZutab, int pErrenk, int pId) {
+	public void setGelaxka(int pZutab, int pErrenk, int pId) {
 		if (pId==0) {
 			Taula.taula[pZutab][pErrenk]=new Gelaxka();
 		}
@@ -52,11 +52,16 @@ public class Taula {
 	public boolean zutabBeteta(int pZutab) {
 		boolean beteta=true;
 		int errenkada=0;
-		while (beteta && errenkada<this.getErrenkadaLuzera()) {
-			if (Taula.taula[pZutab][errenkada].getKolorea()==' ' || Taula.taula[pZutab][errenkada].getKolorea()=='K') {
-				beteta=false;
+		if (pZutab>=0 && pZutab<Taula.taula.length) {
+			while (beteta && errenkada<this.getErrenkadaLuzera()) {
+				if (Taula.taula[pZutab][errenkada].getKolorea()==' ' || Taula.taula[pZutab][errenkada].getKolorea()=='K') {
+					beteta=false;
+				}
+				errenkada++;
 			}
-			errenkada++;
+		}
+		else {
+			beteta=false;
 		}
 		return beteta;
 	}
